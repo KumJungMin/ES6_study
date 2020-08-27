@@ -169,5 +169,115 @@ console.log(list2)    // ['a', 'b', 'c', 'd']
 
 
 <br/> <br/>
-# 2) ES6ㅡ
-: 뒤로가기, 앞으로 가기를 할 때 저장된 이전 값을 불러와야 한다.
+
+## 2) string
+
+### (1) string의 새로운 메소드
+
+- 시작문자열 혹은 끝 문자열이 특정문자열인지 아닌지 알아보자.
+
+: es2015에서는 정규표현식없이 메소드로 판단이 가능하다.
+
+```js
+let str = 'hello world ^^~~';
+let matchstr = 'hello';
+
+//str이 hello로 시작하는 지 어떻게 알 수 있을까?
+console.log(str.startsWith(matchstr));      //true
+
+//str이 ~~로 끝나는 보려면 endsWith()
+console.log(str.endsWith(matchstr));        //false
+
+//특정 문자열이 들어있어? includes()
+console.log(str.includes("^^"));            //true
+
+```
+
+<br/><br/>
+
+## 3) Array
+
+### (1) for of, 순회하기
+
+: `for in`문의 경우, 자신이 가진 객체 이외의 상위객체도 출력하는 경우가 있다.
+
+: 이러한 문제를 예방하 위해 `for of`문을 사용한다.
+
+```js
+var data = [1,2,3];
+
+
+//for문
+for(var i=0; i<data.length; i++){
+  console.log(i);                 //1 2 3
+}
+
+
+//forEach문
+data.forEach(function(value){
+  console.log(value);             //1 2 3
+})
+
+
+//for in문(비선호)
+//자신이 가진 객체 이외에, prototype과 같이 상위객체도 출력함;;
+Array.prototype.getIndex = function(){};
+for(let idx in data){
+  console.log(data[idx]);        //1 2 3 function(){}
+}
+  
+
+//for of문[array의 경우]
+for(let value of data){
+  console.log(value);             //1 2 3
+}
+
+
+//for of문[string의 경우]
+var str = "hello";
+for(let value of str){
+  console.log(value);           //'h', 'e', 'l', 'l', 'o'
+}
+```
+
+<br/>
+
+### (2) spread operator, 배열의 복사
+- spread operator?
+
+: `...변수명`을 하면 해당 변수의 값을 그대로 복사할 수 있다.
+
+```js
+let pre = ['a', 'b', 100];
+let newData = [...pre];
+console.log(newData);           // a, b, 100
+
+```
+
+<br/>
+
+- spread operator의 활용
+
+: spread operator는 원소를 펼치는 형식(더보기 같은 느낌)을 전달한다.
+
+```js
+//newData 중간에 pre값을 넣고 싶다면?
+let pre = [100, 200, 'hello', null];
+let newData = [0,1,2,3, ...pre ,4];
+console.log(newData);       //0, 1, 2, 3, 100, 200, 'hello', null, 4
+
+
+
+//매개변수를 한번에 전달하고 싶다면?
+function sum(a, b, c){
+  return a+b+c;
+}
+let pre2 = [100, 200, 300];
+sum.apply(null, pre);     //방법1
+sum(...pre2);             //방법2
+
+```
+
+<br/>
+
+### (3) from(), 배
