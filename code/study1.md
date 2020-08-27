@@ -150,6 +150,7 @@ home();  // [a, b, c, d]
 ```
 
 <br/>
+
 - `immutable array`는 어떻게 만들지?
 
 : 뒤로가기, 앞으로 가기를 할 때 저장된 이전 값을 불러와야 한다.
@@ -280,4 +281,75 @@ sum(...pre2);             //방법2
 
 <br/>
 
-### (3) from(), 배
+### (3) from(), 진짜배열 만들기
+
+- arguments, 가짜 배열
+
+: js는 `arguments(객체)`를 사용하여 함수에 전달된 인자를 `유사 배열`형태로 받을 수 있다.(근데 배열은 아님)
+
+: 가변적인 인자가 들어오는 경우 `arguments`를 사용한다.(들어오는 인자의 개수를 가늠할 수 없을 때)
+
+```js
+//방법1
+function addMark(){
+  let newData = [];
+  for(let i=0; i<arguments.length; i++){
+    newData.push(arguments[i] + "!");
+  }
+  console.log(newData);
+}
+
+addMark(1,2,3,4,5);             //1!, 2!, 3!, 4!, 5!
+```
+
+: `arguments(객체)`가 배열형태이지만, 진짜 배열이 아니므로 map()의 사용이 불가능하다.
+
+```js
+function addMark(){
+  let newData = arguments.map(function(value){
+    return value + "!";
+  });
+}
+
+addMark(1,2,3,4,5);             //error, argments.map is not function
+```
+
+<br/>
+
+- from(), 진짜 배열
+
+: 유사배열인 `arguments`를 `Array.from(arguments)`를 사용해 진짜로 만든다.
+
+: `Array.from(arguments)`으로 인해 진짜 배열이 되었으므로, `map()` 사용이 가능하다.
+
+```js
+function addMark(){
+  let newArray = Array.from(arguments);
+  let newData = newArray.map(function(value){
+    return value + "!";
+  });
+}
+
+addMark(1,2,3,4,5);             //1!, 2!, 3!, 4!, 5!
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
